@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-
+import { Link } from 'react-router-dom';
 function Veggie() {
   const[Veggie, setVeggie] = useState([]);
   useEffect(()=>{
@@ -13,7 +13,7 @@ function Veggie() {
       setVeggie(JSON.parse(check));
     }
     else{
-      const api = await fetch (`https://api.spoonacular.com/recipes/random?apiKey=63f54752424f4a37acf11731d6a887f9&number=15&tags=vegetarian`);
+      const api = await fetch (`https://api.spoonacular.com/recipes/random?apiKey=ab28ec7a962c424b92cdbfbb3f08c9ac&number=15&tags=vegetarian`);
     const data = await api.json();
     localStorage.setItem('Veggie',JSON.stringify(data.recipes))
     console.log(data);
@@ -26,7 +26,7 @@ function Veggie() {
 
   return (
     <div className='mx-52 rounded-lg '>
-      <h2 className='text-center my-5 font-semibold text-2xl'>Vegetarian</h2>
+      <h2 className='text-center my-5 font-semibold text-2xl'>Our Vegetarian Picks</h2>
     <Splide options={{
       perPage: 4,
       gap: "1rem",
@@ -35,10 +35,10 @@ function Veggie() {
       arrows: false }} >  
        {Veggie.map((recipes)=>{
         return(                  
-            <SplideSlide>
-          <div key={recipes.id}>  
-          <img src={recipes.image} alt='im' className='rounded-2xl bg-cover'/>
-           <p className='text-center'>{recipes.title}</p>
+            <SplideSlide key={recipes.id}>
+          <div key={recipes.id}>  <Link to={'/recipe/'+recipes.id}>
+          <img src={recipes.image} alt='im' className='rounded-2xl bg-cover shadow-xl'/>
+           <p className='text-center'>{recipes.title}</p></Link>
           </div>
             </SplideSlide>
         );

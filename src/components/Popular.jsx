@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { Link } from 'react-router-dom';
 
 function Popular() {
   const[popular, setPopular] = useState([]);
@@ -13,7 +14,7 @@ function Popular() {
       setPopular(JSON.parse(check));
     }
     else{
-      const api = await fetch (`https://api.spoonacular.com/recipes/random?apiKey=63f54752424f4a37acf11731d6a887f9&number=15`);
+      const api = await fetch (`https://api.spoonacular.com/recipes/random?apiKey=ab28ec7a962c424b92cdbfbb3f08c9ac&number=15`);
     const data = await api.json();
     localStorage.setItem('popular', JSON.stringify(data.recipes));
     console.log(data);
@@ -27,7 +28,7 @@ function Popular() {
 
   return (
     <div className='mx-60 '>
-      <h2 className='text-center my-5 font-semibold text-2xl'>Popular</h2>
+      <h2 className='text-center my-5 font-semibold text-2xl'>Our Popular Picks</h2>
     <Splide options={{
       perPage: 3,
       gap: "1rem",
@@ -36,10 +37,10 @@ function Popular() {
       arrows: false }} >  
        {popular.map((recipes)=>{
         return(                  
-            <SplideSlide>
-          <div key={recipes.id}>  
-          <img src={recipes.image} alt='im' className='rounded-2xl bg-cover h-auto  '/>
-           <p className='text-center'>{recipes.title}</p>
+            <SplideSlide key={recipes.id}>
+          <div >  <Link to={'/recipe/'+recipes.id}>
+          <img src={recipes.image} alt='im' className='rounded-2xl bg-cover h-auto shadow-xl '/>
+           <p className='text-center'>{recipes.title}</p></Link>
           </div>
             </SplideSlide>
         );
